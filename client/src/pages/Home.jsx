@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { categories } from "../categories";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../features/post/postSlice";
+import { logout } from "../features/auth/authSlice";
+import { AiOutlineArrowUp } from "react-icons/ai";
 
 const RenderCards = ({ data, title }) => {
   if (data?.length > 0)
@@ -89,41 +91,66 @@ const Home = () => {
     dispatch(getPosts());
   }, [dispatch]);
 
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/auth");
+  };
+
+  // scroll to top functionality
+  const [showArrow, setShowArrow] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.pageYOffset > 300) {
+        setShowArrow(true);
+      } else {
+        setShowArrow(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <section className="w-[90%] mx-auto">
+      {showArrow && (
+        <div
+          className="fixed bottom-20 right-4 text-3xl z-[999] cursor-pointer bg-[#0495ca] text-zinc-50 rounded-full p-[5px]"
+          onClick={handleScrollTop}
+        >
+          <AiOutlineArrowUp />
+        </div>
+      )}
       <div className=" block md:flex  justify-between items-center mt-[20px]">
         <div
           className="flex-[0.2] cursor-pointer"
           onClick={() => setSearchText("")}
         >
           <h1 className="text-2xl sm:text-4xl text-gray-700 font-bold">
-            Pexel - <span className="text-emerald-700">Share</span>
+            PEXEL
           </h1>
         </div>
         <div className=" flex-[1] md:flex-[0.6]">
-          {/* <FormField
-            labelName="Search posts"
-            type="text"
-            name="text"
-            placeholder="Search something..."
-            value={searchText}
-            handleChange={handleSearchChange}
-          /> */}
           <input
             type="text"
             placeholder="Search something"
-            className="w-full p-[8px] mt-[10px] mb-[10px] md:outline-none md:mt-[1px] md:mb-[1px] "
+            className="w-full sm:w-[70%] md:w-[50%] p-[8px] mt-[10px] mb-[10px] md:outline-none md:mt-[1px] md:mb-[1px] outline-none border-2 border-zinc-500 rounded-md"
             value={searchText}
             onChange={handleSearchChange}
           />
         </div>
         <div className=" flex:[1] md:flex-[0.2] flex gap-[20px] items-center justify-between md:justify-end ">
           {user ? (
-            <Link to="/profile">
-              <div className="cursor-pointer">
-                <p>Hi {user?.name}</p>
-              </div>
-            </Link>
+            <div className="cursor-pointer" onClick={handleLogout}>
+              <p>Hi {user?.name}</p>
+            </div>
           ) : (
             <Link to="/auth">
               <div className="cursor-pointer">
@@ -143,7 +170,7 @@ const Home = () => {
         </div>
       </div>
       {/* filters */}
-      <div>
+      {/* <div>
         <h1 className="mb-[20px] mt-[20px] text-xl md:text-2xl">
           Hello {user?.name} <span className="underline">Double click</span>{" "}
           each filter to Apply filters
@@ -169,9 +196,9 @@ const Home = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       {/*  */}
-      <div className="mt-10">
+      <div className="mt-[5px]">
         {isLoading ? (
           <div className="flex justify-center items-center">
             <Loader />
@@ -179,7 +206,7 @@ const Home = () => {
         ) : (
           <>
             {searchText && (
-              <h2 className="font-medium text-[#666e75] text-xl mb-3">
+              <h2 className="font-medium text-[#666e75] text-sm mb-[5px]">
                 showing Resuls for{" "}
                 <span className="text-[#222328]">{searchText}</span>:
               </h2>

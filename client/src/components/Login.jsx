@@ -52,12 +52,12 @@ const Login = () => {
   return (
     <div className="">
       <div className="bg-zinc-100  mb-[1em] p-[1.1em] rounded-md text-center">
-        <h1 className="text-3xl sm:text-5xl text-black font-bold mb-[20px]">
+        <h1 className="text-3xl sm:text-5xl text-black font-bold ">
           A Community of Art
         </h1>
-        <h1 className="text-2xl sm:text-4xl text-gray-700 font-bold">
+        {/* <h1 className="text-2xl sm:text-4xl text-gray-700 font-bold">
           Pexel - <span className="text-emerald-700">Share</span>
-        </h1>
+        </h1> */}
       </div>
       <form className="flex flex-col gap-[1em] " onSubmit={handleSubmit}>
         <input

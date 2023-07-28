@@ -25,7 +25,7 @@ const CreatePost = () => {
     e.preventDefault();
 
     if (!user) {
-      toast.error("Please login or register");
+      navigate("/auth");
       return;
     }
 

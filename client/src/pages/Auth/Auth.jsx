@@ -23,15 +23,11 @@ const Auth = () => {
         />
       )}
 
-      <video
+      <img
+        src="https://images.pexels.com/photos/13458334/pexels-photo-13458334.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
+        alt="Background Placeholder"
         className="w-full h-[100vh] object-cover"
-        src={bgVideo}
-        autoPlay
-        preload="auto"
-        muted
-        loop
-        onLoadedData={handleVideoLoad}
-      ></video>
+      />
       {/* overlay div */}
       <div className="absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,.7)]" />
       <div className="fixed w-full h-full top-0 left-0 pl-[20px] pt-[20px] flex mb-[20px]">
